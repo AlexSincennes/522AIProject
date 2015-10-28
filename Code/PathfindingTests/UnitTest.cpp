@@ -1,11 +1,12 @@
 #include "stdafx.h"
 
-#include "PrimeEngine/Pathfinding/ConvexPolygon.h"
+#include "PrimeEngine/Pathfinding/AStar.h"
 
 using namespace System;
 using namespace System::Text;
 using namespace System::Collections::Generic;
 using namespace Microsoft::VisualStudio::TestTools::UnitTesting;
+using namespace Pathfinding;
 
 namespace PathfindingTests
 {
@@ -54,6 +55,8 @@ namespace PathfindingTests
 		//
 		#pragma endregion 
 
+        // TODO: clean up init code by putting it in region above because they all share the same one
+
 		[TestMethod]
 		void TestConvexPolygon()
 		{
@@ -98,11 +101,87 @@ namespace PathfindingTests
 		};
 
         [TestMethod]
+        void TestNode()
+        {
+            ConvexPolygon* p = new ConvexPolygon();
+            Vector3* p_c = new Vector3(0.25, 0.25, 0); // approximation
+            Vector3* v0 = new Vector3(0, 0, 0);
+            Vector3* v1 = new Vector3(1, 0, 0);
+            Vector3* v2 = new Vector3(0, 1, 0);
+            p->vertices.push_back(v2);
+            p->vertices.push_back(v1);
+            p->vertices.push_back(v0);
+            p->setCentre(p_c);
+
+            ConvexPolygon* neighbour1 = new ConvexPolygon();
+            Vector3* n1_c = new Vector3(0.75, 0.75, 0); // approximation
+            Vector3* v3 = new Vector3(1, 1, 0);
+            neighbour1->neighbours.push_back(p);
+            neighbour1->vertices.push_back(v3);
+            neighbour1->vertices.push_back(v1);
+            neighbour1->vertices.push_back(v2);
+            neighbour1->setCentre(n1_c);
+
+            p->neighbours.push_back(neighbour1);
+
+            AStarNode* entry = new AStarNode(p);
+            
+            // test equals for node
+            Assert::IsTrue(*entry == *entry);
+        }
+
+        [TestMethod]
         void TestAStar()
         {
-            //
-            // TODO: Add test logic here
-            //
+            ConvexPolygon* p = new ConvexPolygon();
+            Vector3* p_c = new Vector3(0.25, 0.25, 0); // approximation
+            Vector3* v0 = new Vector3(0, 0, 0);
+            Vector3* v1 = new Vector3(1, 0, 0);
+            Vector3* v2 = new Vector3(0, 1, 0);
+            p->vertices.push_back(v2);
+            p->vertices.push_back(v1);
+            p->vertices.push_back(v0);
+            p->setCentre(p_c);
+
+            ConvexPolygon* neighbour1 = new ConvexPolygon();
+            Vector3* n1_c = new Vector3(0.75, 0.75, 0); // approximation
+            Vector3* v3 = new Vector3(1, 1, 0);
+            neighbour1->neighbours.push_back(p);
+            neighbour1->vertices.push_back(v3);
+            neighbour1->vertices.push_back(v1);
+            neighbour1->vertices.push_back(v2);
+            neighbour1->setCentre(n1_c);
+
+            p->neighbours.push_back(neighbour1);
+
+            std::vector<AStarNode*> open_list, closed_list;
+            Vector3* goal = new Vector3(0.8, 0.8, 0);
+
+            // a-star setup that will be accomplished in another function later
+            AStarNode* entry = new AStarNode(p);
+
+            open_list.push_back(entry);
+
+            a_star(goal, open_list, closed_list);
+
+            int this_is_where_i_debug = 1;
+
+            for each (AStarNode* n in open_list)  {
+                delete n;
+            }
+            for each (AStarNode* n in closed_list)  {
+                delete n;
+            }
+
+            delete p_c;
+            delete n1_c;
+            delete v0;
+            delete v1;
+            delete v2;
+            delete v3;
+
+            delete neighbour1;
+            delete p;
         };
 	};
 }

@@ -4,41 +4,44 @@
 
 #include <vector>
 
-class ConvexPolygon
-{
-public:
-    ConvexPolygon();
-    ~ConvexPolygon();
+namespace Pathfinding {
 
-    std::vector<Vector3*> vertices;
-    std::vector<ConvexPolygon*> neighbours;
+    class ConvexPolygon
+    {
+    public:
+        ConvexPolygon();
+        ~ConvexPolygon();
 
-    bool ConvexPolygon::operator==(const ConvexPolygon &other) const {
-        bool result = true;
-        for each (Vector3* v in vertices)
-        {
-            std::vector<Vector3*>::const_iterator it = std::find(other.vertices.begin(), other.vertices.end(), v);
-            if (it == other.vertices.end()) {
-                result = false;
-                break;
+        std::vector<Vector3*> vertices;
+        std::vector<ConvexPolygon*> neighbours;
+
+        bool ConvexPolygon::operator==(const ConvexPolygon &other) const {
+            bool result = true;
+            for each (Vector3* v in vertices)
+            {
+                std::vector<Vector3*>::const_iterator it = std::find(other.vertices.begin(), other.vertices.end(), v);
+                if (it == other.vertices.end()) {
+                    result = false;
+                    break;
+                }
             }
+            return result;
         }
-        return result;
-    }
 
-    // returns center of polygon. Useful for A* heuristic algorithm
-    const Vector3* getCentre() {
-        return centre;
-    }
+        // returns center of polygon. Useful for A* heuristic algorithm
+        const Vector3* getCentre() {
+            return centre;
+        }
 
-    // TODO: this should only be temporary while polygons are hard-coded
-    void setCentre(Vector3* v) {
-        if (centre != NULL)
-            delete centre;
-        centre = new Vector3(*v);
-    }
+        // TODO: this should only be temporary while polygons are hard-coded
+        void setCentre(Vector3* v) {
+            if (centre != NULL)
+                delete centre;
+            centre = new Vector3(*v);
+        }
 
-private:
-    Vector3* centre;
-};
+    private:
+        Vector3* centre;
+    };
 
+}

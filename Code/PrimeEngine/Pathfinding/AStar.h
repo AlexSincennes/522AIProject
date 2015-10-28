@@ -1,15 +1,9 @@
-#ifndef _ASTAR_H_
-#define _ASTAR_H_
+#pragma once
 
 #include "ConvexPolygon.h"
+#include "AStarNode.h"
 
-namespace AI {
-
-    struct Node {
-        Node* parent;
-        ConvexPolygon* poly;
-        float f, g, h;
-    };
+namespace Pathfinding {
 
     // return squared distance between 2 points
     inline float distance_squared(const Vector3* p, const Vector3* goal) {
@@ -18,8 +12,6 @@ namespace AI {
                 (goal->getZ() - p->getZ())*(goal->getZ() - p->getZ());
     }
 
-    void a_star();
+    void a_star(const Vector3* goal, std::vector<AStarNode*> open_list, std::vector<AStarNode*> closed_list);
 
 };
-
-#endif

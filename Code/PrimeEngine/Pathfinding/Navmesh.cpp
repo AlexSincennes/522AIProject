@@ -1,11 +1,15 @@
 #include "Navmesh.h"
 
 
-Navmesh::Navmesh()
-{
-}
+namespace Pathfinding {
+
+    Navmesh::Navmesh()
+    {
+    }
 
 
-Navmesh::~Navmesh()
-{
+    Navmesh::~Navmesh()
+    {
+    }
+
 }

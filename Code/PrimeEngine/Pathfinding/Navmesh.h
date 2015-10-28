@@ -2,12 +2,15 @@
 
 #include "ConvexPolygon.h"
 
-class Navmesh
-{
-public:
-    Navmesh();
-    ~Navmesh();
+namespace Pathfinding {
 
-    std::vector<ConvexPolygon> mesh;
-};
+    class Navmesh
+    {
+    public:
+        Navmesh();
+        ~Navmesh();
 
+        std::vector<ConvexPolygon*> mesh;
+    };
+
+}
