@@ -162,9 +162,15 @@ namespace PathfindingTests
 
             open_list.push_back(entry);
 
-            a_star(goal, open_list, closed_list);
+            a_star(goal, &open_list, &closed_list);
 
-            int this_is_where_i_debug = 1;
+            // test that open list is empty
+            Assert::IsTrue(open_list.size() == 0);
+
+            // test that closed list is properly ordered
+            Assert::IsTrue(closed_list.size() == 2);
+            Assert::IsTrue(*closed_list.at(0) == *entry);
+            Assert::IsTrue(*closed_list.at(1)->parent == *entry);
 
             for each (AStarNode* n in open_list)  {
                 delete n;

@@ -12,6 +12,6 @@ namespace Pathfinding {
                 (goal->getZ() - p->getZ())*(goal->getZ() - p->getZ());
     }
 
-    void a_star(const Vector3* goal, std::vector<AStarNode*> open_list, std::vector<AStarNode*> closed_list);
+    void a_star(const Vector3* goal, std::vector<AStarNode*>* open_list, std::vector<AStarNode*>* closed_list);
 
 };
