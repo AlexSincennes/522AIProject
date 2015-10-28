@@ -27,8 +27,18 @@ public:
     }
 
     // returns center of polygon. Useful for A* heuristic algorithm
-    Vector3 getCenter() {
-        return { 0, 0, 0 };
+    const Vector3* getCentre() {
+        return centre;
     }
+
+    // TODO: this should only be temporary while polygons are hard-coded
+    void setCentre(Vector3* v) {
+        if (centre != NULL)
+            delete centre;
+        centre = new Vector3(*v);
+    }
+
+private:
+    Vector3* centre;
 };
 

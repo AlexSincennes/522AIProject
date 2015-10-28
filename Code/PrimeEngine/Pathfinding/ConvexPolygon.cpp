@@ -3,6 +3,7 @@
 
 ConvexPolygon::ConvexPolygon()
 {
+    centre = NULL;
 }
 
 
