@@ -3,16 +3,16 @@
 namespace AI {
 
     void a_star() {
-        pt goal;
+        Vector3 goal;
         std::vector<node*> open_list;
         std::vector<node*> closed_list;
 
         while (open_list.size() > 0) {
-            node* smallest_f_node;
+            node* smallest_f_node;  
             float smallest_f = INT_MAX;
             for each (node* n in open_list)
             {
-                float nf = f(n->p, goal);
+                float nf = distance_squared(n->poly->getCenter(), goal);
                 if (nf < smallest_f) {
                     smallest_f_node = n;
                     smallest_f = nf;
@@ -26,21 +26,21 @@ namespace AI {
                 }
             }
 
-            for each (poly* neighbour in smallest_f_node->p.neighbours) {
+            for each (ConvexPolygon* neighbour in smallest_f_node->poly->neighbours) {
                 node* neighbour_node = (node*)malloc(sizeof(node));
-                neighbour_node->p = *neighbour;
+                neighbour_node->poly = neighbour;
 
-                pt smallest_f_node_pt;
-                smallest_f_node_pt.x = smallest_f_node->p.x;
-                smallest_f_node_pt.y = smallest_f_node->p.y;
-                smallest_f_node_pt.z = smallest_f_node->p.z;
+                Vector3 smallest_f_node_pt;
+                smallest_f_node_pt.m_x = smallest_f_node->poly->getCenter().m_x;
+                smallest_f_node_pt.m_y = smallest_f_node->poly->getCenter().m_y;
+                smallest_f_node_pt.m_z = smallest_f_node->poly->getCenter().m_z;
 
-                neighbour_node->g = smallest_f_node->g + f(neighbour_node->p, smallest_f_node_pt);
-                neighbour_node->h = f(neighbour_node->p, goal);
+                neighbour_node->g = smallest_f_node->g + distance_squared(neighbour_node->poly->getCenter(), smallest_f_node_pt);
+                neighbour_node->h = distance_squared(neighbour_node->poly->getCenter(), goal);
                 neighbour_node->f = neighbour_node->g + neighbour_node->h;
 
                 for each (node* n in open_list)  {
-                    if (poly_equals(neighbour_node->p, n->p)) {
+                    if (neighbour_node->poly == n->poly) {
                         if (n->f < neighbour_node->f) {
                             free(neighbour_node);
                             continue;
@@ -48,7 +48,7 @@ namespace AI {
                     }
                 }
                 for each (node* n in closed_list)  {
-                    if (poly_equals(neighbour_node->p, n->p)) {
+                    if (neighbour_node->poly == n->poly) {
                         if (n->f < neighbour_node->f) {
                             free(neighbour_node);
                             continue;
