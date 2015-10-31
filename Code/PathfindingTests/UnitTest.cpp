@@ -131,7 +131,7 @@ namespace PathfindingTests
         }
 
         [TestMethod]
-        void TestAStar()
+        void TestAStar2Node()
         {
             ConvexPolygon* p = new ConvexPolygon();
             Vector3* p_c = new Vector3(0.25, 0.25, 0); // approximation
@@ -188,6 +188,12 @@ namespace PathfindingTests
 
             delete neighbour1;
             delete p;
+        };
+
+        [TestMethod]
+        void TestAStarMultipleNodes()
+        {
+
         };
 	};
 }
