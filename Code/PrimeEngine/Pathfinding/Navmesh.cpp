@@ -12,4 +12,7 @@ namespace Pathfinding {
     {
     }
 
+    void Navmesh::GenerateNavmesh(Polygon *polygon) {
+
+    }
 }
