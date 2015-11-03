@@ -101,6 +101,28 @@ namespace PathfindingTests
 		};
 
         [TestMethod]
+        void TestPolygonInside()
+        {
+            ConvexPolygon* p = new ConvexPolygon();
+            Vector3* v0 = new Vector3(0, 0, 0);
+            Vector3* v1 = new Vector3(1, 0, 0);
+            Vector3* v2 = new Vector3(0, 1, 0);
+            p->vertices.push_back(v2);
+            p->vertices.push_back(v1);
+            p->vertices.push_back(v0);
+
+            Vector3* pt = new Vector3(0.25, 0.25, 0);
+
+            Assert::IsTrue(p->IsInside(pt));
+
+            delete v0;
+            delete v1;
+            delete v2;
+            delete p;
+            delete pt;
+        }
+
+        [TestMethod]
         void TestNode()
         {
             ConvexPolygon* p = new ConvexPolygon();
@@ -128,6 +150,17 @@ namespace PathfindingTests
             
             // test equals for node
             Assert::IsTrue(*entry == *entry);
+
+            delete p_c;
+            delete n1_c;
+            delete v0;
+            delete v1;
+            delete v2;
+            delete v3;
+
+            delete neighbour1;
+            delete p;
+            delete entry;
         }
 
         [TestMethod]
@@ -193,7 +226,71 @@ namespace PathfindingTests
         [TestMethod]
         void TestAStarMultipleNodes()
         {
+            std::vector<AStarNode*> open_list, closed_list;
+            std::vector<ConvexPolygon*> all_polys;
 
+            const int GRID_SIZE = 4;
+            for (int j = 0; j < GRID_SIZE; j++) {
+                for (int i = 0; i < GRID_SIZE; i++) {
+
+                    ConvexPolygon* p = new ConvexPolygon();
+                    p->vertices.push_back(new Vector3(i, j + 1, 0));
+                    p->vertices.push_back(new Vector3(i + 1, j + 1, 0));
+                    p->vertices.push_back(new Vector3(i + 1, j, 0));
+                    p->vertices.push_back(new Vector3(i, j, 0));
+                    p->setCentre(new Vector3(i + 0.5, j + 0.5, 0));
+
+                    if (i > 0) {
+                        p->neighbours.push_back(all_polys.at(i-1+GRID_SIZE*j));
+                        all_polys.at(i - 1 + GRID_SIZE*j)->neighbours.push_back(p);
+                    }
+                    if (j > 0) {
+                        p->neighbours.push_back(all_polys.at(i + GRID_SIZE*(j-1)));
+                        all_polys.at(i + GRID_SIZE*(j - 1))->neighbours.push_back(p);
+                    }
+
+                    all_polys.push_back(p);
+                    
+                }
+            }
+
+            Vector3* goal = new Vector3(3.9, 3.9, 0);
+
+            // a-star setup that will be accomplished in another function later
+            AStarNode* entry = new AStarNode(all_polys.at(0));
+
+            open_list.push_back(entry);
+
+            a_star(goal, &open_list, &closed_list);
+
+
+            // test that closed list is properly ordered
+            Assert::IsTrue(closed_list.size() == 7);
+            Assert::IsTrue(*closed_list.at(0) == *entry);
+            Assert::IsTrue(*closed_list.at(1)->parent == *entry);
+            Assert::IsTrue(Math::Abs(closed_list.at(6)->polygon->getCentre()->getX() - 3.5) < 0.001 );
+
+
+            // this is probably what
+            // garbage collection for nav-mesh
+            // looks like
+            for each (ConvexPolygon* p in all_polys)
+            {
+                for each (Vector3* v in p->vertices)
+                {
+                    if (v != NULL)
+                        delete v;
+                }
+                delete p->getCentre();
+                delete p;
+            }
+            delete goal;
+            for each (AStarNode* n in open_list)  {
+                delete n;
+            }
+            for each (AStarNode* n in closed_list)  {
+                delete n;
+            }
         };
 	};
 }

@@ -24,6 +24,11 @@ namespace Pathfinding {
                 }
             }
 
+            if (smallest_f_node->polygon->IsInside(goal)) {
+                closed_list->push_back(smallest_f_node);
+                return; // clear open list later
+            }
+
             for each (ConvexPolygon* neighbour in smallest_f_node->polygon->neighbours) {
                 AStarNode* neighbour_node = new AStarNode(neighbour);
                 neighbour_node->parent = smallest_f_node;
@@ -39,8 +44,8 @@ namespace Pathfinding {
 
                 bool skip = false;
                 for each (AStarNode* n in *open_list)  {
-                    if (neighbour_node->polygon == n->polygon) {
-                        if (n->f < neighbour_node->f) {
+                    if (*neighbour_node->polygon == *n->polygon) {
+                        if (n->f <= neighbour_node->f) {
                             delete neighbour_node;
                             skip = true;
                             break;
@@ -50,8 +55,8 @@ namespace Pathfinding {
                 if (skip) continue;
 
                 for each (AStarNode* n in *closed_list)  {
-                    if (neighbour_node->polygon == n->polygon) {
-                        if (n->f < neighbour_node->f) {
+                    if (*neighbour_node->polygon == *n->polygon) {
+                        if (n->f <= neighbour_node->f) {
                             delete neighbour_node;
                             skip = true;
                             break;

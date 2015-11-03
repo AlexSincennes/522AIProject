@@ -12,6 +12,7 @@ namespace Pathfinding {
         ConvexPolygon();
         ~ConvexPolygon();
 
+        // vertices must be in CLOCKWISE order
         std::vector<Vector3*> vertices;
         std::vector<ConvexPolygon*> neighbours;
 
@@ -27,6 +28,8 @@ namespace Pathfinding {
             }
             return result;
         }
+
+        bool ConvexPolygon::IsInside(const Vector3* pt);
 
         // returns center of polygon. Useful for A* heuristic algorithm
         const Vector3* getCentre() {
