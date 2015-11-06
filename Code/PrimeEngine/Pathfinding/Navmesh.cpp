@@ -10,6 +10,16 @@ namespace Pathfinding {
 
     Navmesh::~Navmesh()
     {
+        for each (ConvexPolygon* p in mesh)
+        {
+            for each (Vector3* v in p->vertices)
+            {
+                if (v != NULL)
+                    delete v;
+            }
+            delete p->getCentre();
+            delete p;
+        }
     }
 
     // tests angle for > 180

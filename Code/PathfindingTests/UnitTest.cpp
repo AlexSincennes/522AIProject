@@ -2,6 +2,8 @@
 
 #include "PrimeEngine/Pathfinding/AStar.h"
 
+#include "PrimeEngine/Pathfinding/Navmesh.h"
+
 using namespace System;
 using namespace System::Text;
 using namespace System::Collections::Generic;
@@ -291,6 +293,36 @@ namespace PathfindingTests
             for each (AStarNode* n in closed_list)  {
                 delete n;
             }
+        };
+
+
+        [TestMethod]
+        void TestBasicMeshSubdivision()
+        {
+            Pathfinding::Polygon* poly = new Pathfinding::Polygon();
+
+            // clockwise
+            Vector3* p0 = new Vector3(0, 1, 0);
+            Vector3* p1 = new Vector3(1, 1, 0);
+            Vector3* p2 = new Vector3(1, 0, 0);
+            Vector3* p3 = new Vector3(0, 0, 0);
+
+
+            poly->vertices.push_back(p0);
+            poly->vertices.push_back(p1);
+            poly->vertices.push_back(p2);
+            poly->vertices.push_back(p3);
+
+            Navmesh* navmesh = new Navmesh();
+            navmesh->GenerateNavmesh(poly);
+
+            Assert::IsTrue(poly->vertices.size() == 4);
+            Assert::IsTrue(*(poly->vertices.at(0)) == *p0);
+            Assert::IsTrue(*(poly->vertices.at(1)) == *p1);
+            Assert::IsTrue(*(poly->vertices.at(2)) == *p2);
+            Assert::IsTrue(*(poly->vertices.at(3)) == *p3);
+
+            delete navmesh;
         };
 	};
 }
