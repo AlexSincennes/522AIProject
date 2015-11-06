@@ -2,6 +2,8 @@
 
 #include "PrimeEngine/Math/Vector3.h"
 
+#include "Polygon.h"
+
 #include <vector>
 
 namespace Pathfinding {
@@ -41,6 +43,15 @@ namespace Pathfinding {
             if (centre != NULL)
                 delete centre;
             centre = new Vector3(*v);
+        }
+
+        void Clone(Polygon* p) {
+            for each (Vector3* v in p->vertices)
+            {
+                Vector3* vn = new Vector3(*v);
+                vertices.push_back(vn);
+            }
+            // call set centre
         }
 
     private:

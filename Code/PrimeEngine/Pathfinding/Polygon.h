@@ -6,6 +6,7 @@
 
 namespace Pathfinding {
 
+    // consider keeping a next/prev relationship
     class Polygon
     {
     public:
