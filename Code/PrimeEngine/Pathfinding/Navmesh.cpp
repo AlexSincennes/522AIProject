@@ -22,14 +22,35 @@ namespace Pathfinding {
         }
     }
 
+    float Dist(Vector3* p1, Vector3* p2) {
+        return sqrt((p1->getX() - p2->getX())*(p1->getX() - p2->getX()) + (p1->getY() - p2->getY())*(p1->getY() - p2->getY()));
+    }
+
+    float CalculateAngleDegrees(Vector3* center, Vector3* v1, Vector3* v2) {
+
+        //alternatively: (double check to make sure it works out...)
+        //Vector3 v1 = *p2 - *center;
+        //Vector3 v2 = *p1 - *center;
+        //float dot = v1.getX() * v2.getX() + v1.getY() * v2.getY();
+        //float det = v1.getX() * v2.getY() - v1.getY() * v2.getX();
+        //float angle = atan2(det, dot);
+
+
+        float pc1, pc2, p12;
+        pc1 = Dist(center, v1);
+        pc2 = Dist(center, v2);
+        p12 = Dist(v1, v2);
+        
+        return acos((pc1*pc1 + pc2*pc2 - p12*p12) / (2 * pc1 * pc2)) * 180 / M_PI;
+    }
+
     // tests angle for > 180
     bool HasReflexAngle(Vector3* p1, Vector3* p2, Vector3* p3) {
         Vector3 v1 = *p3 - *p1;
         Vector3 v2 = *p2 - *p1;
 
         // use determinant to get sign
-        float det = 0;
-        det = v1.getX() * v2.getY() - v1.getY() * v2.getX();
+        float det = v1.getX() * v2.getY() - v1.getY() * v2.getX();
         return det > 0;
     }
 
@@ -134,23 +155,25 @@ namespace Pathfinding {
         std::vector<Polygon*> triangles;
         std::vector<Polygon*>::iterator iter_outer, iter_inner;
         
-        // trivial case: all angles on outside
-        // of polygon are reflex angles
-        // therefore the polygon is convex
-        for (int i = 0; i<polygon->vertices.size(); i++) {   
-            bool hasRA = HasReflexAngle(
-                polygon->vertices.at((i - 1) % polygon->vertices.size()),
+        // check every angle to see if it is a reflex angle (i.e. > 180)
+        bool hasRA = false;
+        for (int i = 0; i < polygon->vertices.size(); i++) {   
+             hasRA = HasReflexAngle(
                 polygon->vertices.at(i),
+                polygon->vertices.at((i - 1) % polygon->vertices.size()),
                 polygon->vertices.at((i + 1) % polygon->vertices.size()));
             if (hasRA) {
-                // if convex, then just convert polygon to convex type
-                ConvexPolygon* convexpoly = new ConvexPolygon();
-                convexpoly->Clone(polygon);
-                mesh.push_back(convexpoly);
-                return true;
+                break;
             }
         }
 
+        // no reflex angles -> must be convex
+        if (!hasRA) {
+            ConvexPolygon* convexpoly = new ConvexPolygon();
+            convexpoly->Clone(polygon);
+            mesh.push_back(convexpoly);
+            return true;
+        }
        
 
         // triangulate polygon
