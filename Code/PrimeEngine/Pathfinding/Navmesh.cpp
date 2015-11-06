@@ -17,7 +17,8 @@ namespace Pathfinding {
                 if (v != NULL)
                     delete v;
             }
-            delete p->getCentre();
+            if (p->getCentre() != NULL)
+                delete p->getCentre();
             delete p;
         }
     }
@@ -27,15 +28,6 @@ namespace Pathfinding {
     }
 
     float CalculateAngleDegrees(Vector3* center, Vector3* v1, Vector3* v2) {
-
-        //alternatively: (double check to make sure it works out...)
-        //Vector3 v1 = *p2 - *center;
-        //Vector3 v2 = *p1 - *center;
-        //float dot = v1.getX() * v2.getX() + v1.getY() * v2.getY();
-        //float det = v1.getX() * v2.getY() - v1.getY() * v2.getX();
-        //float angle = atan2(det, dot);
-
-
         float pc1, pc2, p12;
         pc1 = Dist(center, v1);
         pc2 = Dist(center, v2);
@@ -44,23 +36,25 @@ namespace Pathfinding {
         return acos((pc1*pc1 + pc2*pc2 - p12*p12) / (2 * pc1 * pc2)) * 180 / M_PI;
     }
 
-    // tests angle for > 180
-    bool HasReflexAngle(Vector3* p1, Vector3* p2, Vector3* p3) {
-        Vector3 v1 = *p3 - *p1;
-        Vector3 v2 = *p2 - *p1;
-
+    // tests angle for > 180 where first arg is the center of the angle
+    bool HasReflexAngle(Vector3* center, Vector3* p1, Vector3* p2) {
+        Vector3 v1 = *p2 - *center;
+        Vector3 v2 = *p1 - *center;
+        CalculateAngleDegrees(center, p1, p2);
         // use determinant to get sign
         float det = v1.getX() * v2.getY() - v1.getY() * v2.getX();
         return det > 0;
     }
 
-    // ear-clipping method
-    bool TriangulateEarClip(Polygon *poly, std::vector<Polygon*> *triangles) {
+    // ear-clipping method (with residual poly that is convex)
+    bool TriangulateEarClip(Polygon *poly, std::vector<ConvexPolygon*> *triangles) {
 
         // check for trivial cases
         if (poly->vertices.size() < 3) return false;
         if (poly->vertices.size() == 3) {
-            triangles->push_back(poly);
+            ConvexPolygon* p = new ConvexPolygon();
+            p->Clone(poly);
+            triangles->push_back(p);
             return true;
         }
 
@@ -69,37 +63,29 @@ namespace Pathfinding {
         for each (Vector3* v in poly->vertices)
         {
             Vector3* nv = new Vector3(*v);
+            vertices.push_back(nv);
         }
         
         // -3 since the last 3 form a triangle which must be convex
         for (int i = 0; i < vertices.size() - 3; i++) {
 
+            int ear_index = 0;
             Vector3* ear;
             float ear_angle = 0;
             //find the most extruded ear
-            int ear_index;
-            for (ear_index = 0; ear_index < vertices.size(); ear_index++) {
+            for (int j = 0; j < vertices.size(); j++) {
 
                 // calc angle
-                Vector3* p1 = vertices.at(ear_index);
-                Vector3* p2 = vertices.at((ear_index - 1) % vertices.size());
-                Vector3* p3 = vertices.at((ear_index + 1) % vertices.size());
+                Vector3* p1 = vertices.at(j);
+                Vector3* p2 = vertices.at((j - 1 + vertices.size()) % vertices.size());
+                Vector3* p3 = vertices.at((j + 1) % vertices.size());
 
-                Vector3 v1 = *p3 - *p1;
-                Vector3 v2 = *p2 - *p1;
-                float dot = v1.getX() * v2.getX() + v1.getY() * v2.getY();
-                float det = v1.getX() * v2.getY() - v1.getY() * v2.getX();
-                float angle = atan2(det, dot);
+                float angle = CalculateAngleDegrees(p1, p2, p3);
 
-                if (abs(ear_angle) < 0.001) {
-                    ear = vertices.at(ear_index);
+                if (angle > ear_angle) {
+                    ear = vertices.at(j);
                     ear_angle = angle;
-                }
-                else {
-                    if (angle > ear_angle) {
-                        ear = vertices.at(ear_index);
-                        ear_angle = angle;
-                    }
+                    ear_index = j;
                 }
             }
 
@@ -113,9 +99,9 @@ namespace Pathfinding {
 
             // create ear triangle
             Vector3* p1 = vertices.at(ear_index);
-            Vector3* p2 = vertices.at((ear_index - 1) % vertices.size());
-            Vector3* p3 = vertices.at((ear_index + 1) % vertices.size());
-            Polygon* triangle = new Polygon();
+            Vector3* p2 = vertices.at((ear_index - 1 + vertices.size()) % vertices.size());
+            Vector3* p3 = vertices.at((ear_index - 2 + vertices.size()) % vertices.size());
+            ConvexPolygon* triangle = new ConvexPolygon();
             triangle->vertices.push_back(p2);
             triangle->vertices.push_back(p1);
             triangle->vertices.push_back(p3);
@@ -123,27 +109,19 @@ namespace Pathfinding {
             // add ear to triangles
             triangles->push_back(triangle);
             // clip ear
-            vertices.erase(vertices.begin() + ear_index);
+            vertices.erase(vertices.begin() + ear_index - 1);
         }
 
         // add the vertices which haven't been clipped off
+
+        ConvexPolygon* remainder = new ConvexPolygon();
         for (int i = 0; i < vertices.size(); i++) {
             Vector3* p1 = vertices.at(i);
-            Vector3* p2 = vertices.at((i - 1) % vertices.size());
-            Vector3* p3 = vertices.at((i + 1) % vertices.size());
-            Polygon* triangle = new Polygon();
-            triangle->vertices.push_back(p2);
-            triangle->vertices.push_back(p1);
-            triangle->vertices.push_back(p3);
-
-            triangles->push_back(triangle);
+            remainder->vertices.push_back(p1);
         }
+        triangles->push_back(remainder);
 
-        // clear mem
-        for each (Vector3* v in vertices)
-        {
-            delete v;
-        }
+        // TODO: create the neighbour relationship
 
         return true;
     }
@@ -152,15 +130,15 @@ namespace Pathfinding {
     bool Navmesh::GenerateNavmesh(Polygon *polygon) {
 
         // TODO: make adjustments to get it to be less copy-paste
-        std::vector<Polygon*> triangles;
-        std::vector<Polygon*>::iterator iter_outer, iter_inner;
+        std::vector<ConvexPolygon*> triangles;
+        std::vector<ConvexPolygon*>::iterator iter_outer, iter_inner;
         
         // check every angle to see if it is a reflex angle (i.e. > 180)
         bool hasRA = false;
         for (int i = 0; i < polygon->vertices.size(); i++) {   
              hasRA = HasReflexAngle(
                 polygon->vertices.at(i),
-                polygon->vertices.at((i - 1) % polygon->vertices.size()),
+                polygon->vertices.at((i - 1 + polygon->vertices.size()) % polygon->vertices.size()),
                 polygon->vertices.at((i + 1) % polygon->vertices.size()));
             if (hasRA) {
                 break;
@@ -176,14 +154,25 @@ namespace Pathfinding {
         }
        
 
-        // triangulate polygon
+        // triangulate polygon --> probably good enough for our purposes, we'll see
         if (!TriangulateEarClip(polygon, &triangles)) 
             return false;
+        else {
+            for each (ConvexPolygon* p in triangles)
+            {
+                mesh.push_back(p);
+
+            }
+            return true;
+        }
+            
+
+        // IGNORE ALL OF THIS FOR NOW
 
         // combine triangles if still form convex polygon
         for (iter_outer = triangles.begin(); iter_outer != triangles.end(); iter_outer++) {
-            Polygon *cur = *iter_outer;
-            Polygon *cur2;
+            ConvexPolygon *cur = *iter_outer;
+            ConvexPolygon *cur2;
             int i11, i12, i21, i22, i13, i23; // indices for relationships between vertices
             for (i11 = 0; i11 < cur->vertices.size(); i11++) {
                 Vector3* diag1 = cur->vertices.at(i11);
@@ -254,7 +243,7 @@ namespace Pathfinding {
                 if (HasReflexAngle(p1, p2, p3)) // no reflex angle = convex
                     continue;
 
-                Polygon *newpoly = new Polygon();
+                ConvexPolygon *newpoly = new ConvexPolygon();
                 for (int j = i12; j != i11; j = (j + 1) % (cur->vertices.size())) {
                     newpoly->vertices.push_back(cur->vertices.at(j));
                 }
@@ -271,8 +260,7 @@ namespace Pathfinding {
 
         // create convex poly mesh and delete list of triangles (default "Polygon")
         for (iter_outer = triangles.begin(); iter_outer != triangles.end(); iter_outer++) {
-            ConvexPolygon* p = new ConvexPolygon();
-            p->Clone(*iter_outer);
+            ConvexPolygon* p = new ConvexPolygon(**iter_outer);
             delete *iter_outer;
             mesh.push_back(p);
         }

@@ -29,4 +29,7 @@ namespace Pathfinding {
 
         return isInside;
     }
+
+    // TODO: CALCULATE REAL CENTRE FUNCTION
+    // also, getCentre should calculate centre when asked (lazy eval)
 }
