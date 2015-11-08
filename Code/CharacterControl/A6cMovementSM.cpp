@@ -269,7 +269,7 @@ namespace CharacterControl {
             flyCameraEvt->m_relativeMove = relativeMovement * Debug_Fly_Speed * m_frameTime;
             m_pQueueManager->add(h, QT_GENERAL);
             }*/
-            else if(Event_KEY_LEFT_HELD::GetClassId() == pEvt->getClassId())
+             if(Event_KEY_LEFT_HELD::GetClassId() == pEvt->getClassId())
             {
                 PE::Handle h("EVENT", sizeof(Event_A6C_Turn));
                 Event_A6C_Turn *rotateCameraEvt = new(h)Event_A6C_Turn;
@@ -305,7 +305,7 @@ namespace CharacterControl {
                 m_pQueueManager->add(h, QT_GENERAL);
             }
 
-            /*
+            
             else if (Event_KEY_DOWN_HELD::GetClassId() == pEvt->getClassId())
             {
             PE::Handle h("EVENT", sizeof(Event_ROTATE_CAMERA));
@@ -324,7 +324,7 @@ namespace CharacterControl {
             rotateCameraEvt->m_relativeRotate = relativeRotate * Debug_Rotate_Speed * m_frameTime;
             m_pQueueManager->add(h, QT_GENERAL);
             }
-            */
+            
             else
             {
                 Component::handleEvent(pEvt);
@@ -457,20 +457,20 @@ namespace CharacterControl {
 
           SceneNode *pFirstSN = hFisrtSN.getObject<SceneNode>();
 
-   //          Vector3 pos = RootSceneNode::Instance()->MichaelCam;
-			// float x = pos.m_x;
-   //          float y = pos.m_y + 1.0f;
-   //         float z = pos.m_z-2.0f;
+             Vector3 pos = RootSceneNode::Instance()->MichaelCam;
+			 float x = pos.m_x;
+             float y = pos.m_y + 1.0f;
+            float z = pos.m_z-2.0f;
 
-   //         // note we could have stored the camera reference in this object instead of searching for camera scene node
-   //         if (CameraSceneNode *pCamSN = pFirstSN->getFirstComponent<CameraSceneNode>())
-   //         {
-   //             pCamSN->m_base.setPos(Vector3(x,y,z));
-   //         }
+            // note we could have stored the camera reference in this object instead of searching for camera scene node
+            if (CameraSceneNode *pCamSN = pFirstSN->getFirstComponent<CameraSceneNode>())
+            {
+				pCamSN->m_base.setPos(Vector3(-5.0f, 4.0f, -7.0f));
+            }
 
-			//A6cMovementSM* pMovSM = hmovementSM.getObject<A6cMovementSM>();
-			//if( pMovSM->m_state == A6cMovementSM::SHOOTING)
-			//{
+			A6cMovementSM* pMovSM = hmovementSM.getObject<A6cMovementSM>();
+			if( pMovSM->m_state == A6cMovementSM::STANDING)
+			{
 			//	Vector3 fpos = RootSceneNode::Instance()->MichaelFrontCam;
 			//	 float xf = fpos.m_x+0.25f;
 			//	float yf = fpos.m_y + 0.25f;
@@ -479,7 +479,12 @@ namespace CharacterControl {
 			//	{
 			//		pCamSN->m_base.setPos(Vector3(xf,yf,zf));
 			//	}
-			//}
+				if (CameraSceneNode *pCamSN = pFirstSN->getFirstComponent<CameraSceneNode>())
+				{
+					
+					pCamSN->m_base.setPos(Vector3(-5.0f, 6.0f, -25.0f));
+				}
+			}
 			
             if (!m_overriden)
             {

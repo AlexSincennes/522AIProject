@@ -3,7 +3,7 @@
 
 // API Abstraction
 #include "PrimeEngine/APIAbstraction/APIAbstractionDefines.h"
-
+#include "../Events/Component.h"
 // Outer-Engine includes
 #include <assert.h>
 #include "../Math/Vector3.h"
