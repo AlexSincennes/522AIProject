@@ -556,29 +556,29 @@ namespace CharacterControl {
             }
 
    //         //create camera
-   //         PE::Handle hCamera("Camera", sizeof(Camera));
-   //         Camera *pCamera = new(hCamera)Camera(*m_pContext, m_arena, hCamera, hFisrtSN);
-   //         pCamera->addDefaultComponents();
-   //         CameraManager::Instance()->setCamera(CameraManager::PLAYER, hCamera);
+           PE::Handle hCamera("Camera", sizeof(Camera));
+            Camera *pCamera = new(hCamera)Camera(*m_pContext, m_arena, hCamera, hFisrtSN);
+            pCamera->addDefaultComponents();
+            CameraManager::Instance()->setCamera(CameraManager::PLAYER, hCamera);
 
-   //         CameraManager::Instance()->selectActiveCamera(CameraManager::PLAYER);
+            CameraManager::Instance()->selectActiveCamera(CameraManager::PLAYER);
 
-   //         //disable default camera controls
+            //disable default camera controls
 
-   //         m_pContext->getDefaultGameControls()->setEnabled(false);
-   //         m_pContext->get<CharacterControlContext>()->getSpaceShipGameControls()->setEnabled(false);
-   //         
-   //         //disable tank controls
-   //         m_pContext->get<CharacterControlContext>()->getTankGameControls()->setEnabled(false);
+            m_pContext->getDefaultGameControls()->setEnabled(false);
+            m_pContext->get<CharacterControlContext>()->getSpaceShipGameControls()->setEnabled(false);
+            
+            //disable tank controls
+            m_pContext->get<CharacterControlContext>()->getTankGameControls()->setEnabled(false);
 
-			//try
-			//{
-			//	//enable A6C controls
-			//	m_pContext->get<CharacterControlContext>()->getA6cControls()->setEnabled(true);
-			//}
-			//catch (int e)
-			//{
-			//}
+			try
+			{
+				//enable A6C controls
+				m_pContext->get<CharacterControlContext>()->getA6cControls()->setEnabled(true);
+			}
+			catch (int e)
+			{
+			}
 
         }
     }
