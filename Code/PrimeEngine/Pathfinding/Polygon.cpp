@@ -13,6 +13,13 @@ namespace Pathfinding {
 
 	void CreatePolygonMesh()
 	{
+        // we use X and Y for the mesh --> transform z to y
+
+        // also I don't know why any Y values are used here
+
+        // basically, I want you to create a mesh which defines the
+        // traversable areas of the map as a convex polygons
+
 		{
 			Polygon* p = new Polygon();
 			Vector3* v2 = new Vector3(954.004, 0, 904.308);
