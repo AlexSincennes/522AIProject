@@ -482,7 +482,7 @@ namespace CharacterControl {
 				if (CameraSceneNode *pCamSN = pFirstSN->getFirstComponent<CameraSceneNode>())
 				{
 					
-					pCamSN->m_base.setPos(Vector3(-5.0f, 6.0f, -25.0f));
+					pCamSN->m_base.setPos(Vector3(5.0f, 6.0f, -30.0f));
 				}
 			}
 			

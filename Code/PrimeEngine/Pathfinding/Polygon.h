@@ -28,6 +28,11 @@ namespace Pathfinding {
             }
             return result;
         }
+		void Polygon::CreatePolygonMesh();
     };
 
+	
+	
+
+	
 }

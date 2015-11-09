@@ -16,6 +16,7 @@ namespace Pathfinding {
         // create mesh of convex polygons from non-convex polygon
         // Hertel and Mehlhorn partition
         bool Navmesh::GenerateNavmesh(Polygon *polygon);
+
     };
 
 }

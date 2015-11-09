@@ -505,6 +505,9 @@
     <Filter Include="AssetsOut\Vampire\Textures">
       <UniqueIdentifier>{B8E443E5-185A-3940-9F96-74101730CC0A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pathfinding">
+      <UniqueIdentifier>{d922c755-c71b-47f5-acfe-b8633d701075}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="premake4-primeengine.lua" />
@@ -2235,8 +2238,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameIOSInput.h" />
-    <ClInclude Include="GameThreadJob.h" />
     <ClInclude Include="PrimeEngineIncludes.h" />
     <ClInclude Include="RenderJob.h" />
     <ClInclude Include="APIAbstraction\APIAbstractionDefines.h">
@@ -2737,9 +2738,25 @@
     <ClInclude Include="GameObjectModel\PhysicsComponent.h">
       <Filter>GameObjectModel</Filter>
     </ClInclude>
+    <ClInclude Include="Pathfinding\AStar.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinding\AStarNode.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinding\ConvexPolygon.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinding\Navmesh.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinding\Polygon.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="GameIOSInput.h" />
+    <ClInclude Include="GameThreadJob.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameThreadJob.cpp" />
     <ClCompile Include="RenderJob.cpp" />
     <ClCompile Include="APIAbstraction\DirectX11\D3D11_GPUBuffers\D3D11_IndexBufferGPU.cpp">
       <Filter>APIAbstraction\DirectX11\D3D11_GPUBuffers</Filter>
@@ -3182,6 +3199,22 @@
     <ClCompile Include="GameObjectModel\PhysicsComponent .cpp">
       <Filter>GameObjectModel</Filter>
     </ClCompile>
+    <ClCompile Include="Pathfinding\AStar.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding\AStarNode.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding\ConvexPolygon.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding\Navmesh.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding\Polygon.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="GameThreadJob.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\AssetsOut\Default\GPUPrograms\ColoredMinimalMesh_2D_VS.cgvs">

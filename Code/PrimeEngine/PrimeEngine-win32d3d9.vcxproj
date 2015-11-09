@@ -118,6 +118,11 @@
     <ClInclude Include="GameObjectModel\PhysicsComponent.h" />
     <ClInclude Include="GameObjectModel\PhysicsManager.h" />
     <ClInclude Include="GameThreadJob.h" />
+    <ClInclude Include="Pathfinding\AStar.h" />
+    <ClInclude Include="Pathfinding\AStarNode.h" />
+    <ClInclude Include="Pathfinding\ConvexPolygon.h" />
+    <ClInclude Include="Pathfinding\Navmesh.h" />
+    <ClInclude Include="Pathfinding\Polygon.h" />
     <ClInclude Include="PrimeEngineIncludes.h" />
     <ClInclude Include="RenderJob.h" />
     <ClInclude Include="APIAbstraction\APIAbstractionDefines.h" />
@@ -290,6 +295,11 @@
     <ClCompile Include="GameObjectModel\PhysicsManager.cpp" />
     <ClCompile Include="GameThreadJob.cpp">
     </ClCompile>
+    <ClCompile Include="Pathfinding\AStar.cpp" />
+    <ClCompile Include="Pathfinding\AStarNode.cpp" />
+    <ClCompile Include="Pathfinding\ConvexPolygon.cpp" />
+    <ClCompile Include="Pathfinding\Navmesh.cpp" />
+    <ClCompile Include="Pathfinding\Polygon.cpp" />
     <ClCompile Include="RenderJob.cpp">
     </ClCompile>
     <ClCompile Include="APIAbstraction\DirectX11\D3D11_GPUBuffers\D3D11_IndexBufferGPU.cpp">
