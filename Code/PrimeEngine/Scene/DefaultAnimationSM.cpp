@@ -21,7 +21,7 @@
 #include "PrimeEngine/Geometry/SkeletonCPU/SkeletonCPU.h"
 #include "PrimeEngine/APIAbstraction/GPUBuffers/AnimSetBufferGPU.h"
 // Sibling/Children includes
-
+#include "PrimeEngine/Scene/RootSceneNode.h"
 #include "SceneNode.h"
 #include "DrawList.h"
 #include "SH_DRAW.h"
@@ -315,6 +315,15 @@ void DefaultAnimationSM::do_CALCULATE_TRANSFORMATIONS(Events::Event *pEvt)
 		if (hp.isValid())
 		{	
 			tmp = hp.getObject<PE::Components::SceneNode>()->m_base;
+		}
+
+		Vector3 tarPos;
+		int flag = strcmp(pSkelCPU->m_name, "StandIdle_hip.skela");
+		if (flag)
+		{
+			tarPos = m_modelSpacePalette[m_modelSpacePalette.m_size - 4].getPos();
+			RootSceneNode::Instance()->targetPosition = tarPos;
+			
 		}
 
 		// finally add inverse transformation of vertices into local space of the bones (bind pose transformation)
