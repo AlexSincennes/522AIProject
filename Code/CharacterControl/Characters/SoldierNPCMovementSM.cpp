@@ -118,8 +118,8 @@ void SoldierNPCMovementSM::do_UPDATE(PE::Events::Event *pEvt)
 			PE::Handle hPM("PHYSICS_MANAGER", sizeof(PhysicsManager));
 			PhysicsManager *pMainPM = new(hPM)PhysicsManager(*m_pContext, m_arena, hPM);
 
-			pMainPM->PrePhysics(curPos, m_targetPostion, speed* pRealEvt->m_frameTime);
-			curPos = pMainPM->UpdatePhysics();
+		//	pMainPM->PrePhysics(curPos, m_targetPostion, speed* pRealEvt->m_frameTime); // Commented physics as its not working as expected! Can tweak it once the rest is done
+			//curPos = pMainPM->UpdatePhysics();
 
 			float dsqr = (m_targetPostion - curPos).lengthSqr();
 
