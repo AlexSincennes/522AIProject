@@ -88,9 +88,9 @@ int ClientCharacterControlGame::initGame()
 
 #if !PE_API_IS_D3D11
 		{
-			for (int i = 0; i < 6; ++i)
-				((ClientGameObjectManagerAddon*)(pGameCtx->getGameObjectManagerAddon()))->createTank(
-				i, m_pContext->m_gameThreadThreadOwnershipMask);
+			//for (int i = 0; i < 6; ++i)
+			//	((ClientGameObjectManagerAddon*)(pGameCtx->getGameObjectManagerAddon()))->createTank(
+			//	i, m_pContext->m_gameThreadThreadOwnershipMask);
 		}
 #endif
 	}
