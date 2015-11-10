@@ -11,6 +11,7 @@
 #include "CharacterControl/Characters/SoldierNPCAnimationSM.h"
 #include "CharacterControlContext.h"
 #include "A6cMovementSM.h"
+#include "PrimeEngine/Pathfinding/Polygon.h"
 
 #if PE_PLAT_IS_WIN32
 #include "test.h"
@@ -65,6 +66,14 @@ int ClientCharacterControlGame::initGame()
 		// now all game events will be passed through to our GameObjectManagerAddon
 		m_pContext->getGameObjectManager()->addComponent(hGOMAddon);
 	}
+
+	//Create PolyMesh 
+	{
+		Pathfinding::Polygon* p = new Pathfinding::Polygon();
+		p->CreatePolygonMesh();
+	}
+
+
 
 	//create tank controls that will be enabled if tank is activated
 	{

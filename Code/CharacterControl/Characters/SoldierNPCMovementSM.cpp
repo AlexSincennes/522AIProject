@@ -1,11 +1,12 @@
 #include "PrimeEngine/APIAbstraction/APIAbstractionDefines.h"
-
+#include "PrimeEngine/Scene/RootSceneNode.h"
 #include "PrimeEngine/Lua/LuaEnvironment.h"
 #include "PrimeEngine/Scene/CameraSceneNode.h"
 #include "SoldierNPCMovementSM.h"
 #include "SoldierNPCAnimationSM.h"
 #include "SoldierNPC.h"
 #include "PrimeEngine/GameObjectModel/PhysicsManager.h"
+#include "PrimeEngine/Pathfinding/Navmesh.h"
 
 using namespace PE::Components;
 using namespace PE::Events;
@@ -120,6 +121,16 @@ void SoldierNPCMovementSM::do_UPDATE(PE::Events::Event *pEvt)
 
 		//	pMainPM->PrePhysics(curPos, m_targetPostion, speed* pRealEvt->m_frameTime); // Commented physics as its not working as expected! Can tweak it once the rest is done
 			//curPos = pMainPM->UpdatePhysics();
+
+
+			//Call mathod to find the next polygon 
+			Pathfinding::Navmesh *n = new Pathfinding::Navmesh();
+			Pathfinding::ConvexPolygon *next = new Pathfinding::ConvexPolygon();
+			Vector3* p3 = new Vector3(0, 0, 0);
+			next->vertices.push_back(p3);
+			
+			Vector3 goal = RootSceneNode::Instance()->targetPosition;
+			n->FindNextPosition(curPos,goal,next);
 
 			float dsqr = (m_targetPostion - curPos).lengthSqr();
 
