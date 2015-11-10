@@ -268,6 +268,31 @@ namespace Pathfinding {
         return true;
     }
 
-	
+    void Navmesh::FindNextPosition(Vector3 &pos, Vector3 &goal, ConvexPolygon *next_poly) {
+        ConvexPolygon *currentPoly;
 
+        for each (ConvexPolygon *p in mesh)
+        {
+            if (p->IsInside(&pos)) {
+                currentPoly = p;
+            }
+        }
+
+        std::vector<AStarNode*> open_list, closed_list;
+
+        AStarNode* entry = new AStarNode(currentPoly);
+
+        open_list.push_back(entry);
+
+        a_star(&goal, &open_list, &closed_list);
+
+        next_poly = new ConvexPolygon (*closed_list.at(1)->polygon);   
+
+        for each (AStarNode* n in open_list)  {
+            delete n;
+        }
+        for each (AStarNode* n in closed_list)  {
+            delete n;
+        }
+    }
 }
