@@ -11,7 +11,7 @@ namespace Pathfinding {
     {
     }
 
-	void CreatePolygonMesh()
+	void Polygon::CreatePolygonMesh()
 	{
         // we use X and Y for the mesh --> transform z to y
 
