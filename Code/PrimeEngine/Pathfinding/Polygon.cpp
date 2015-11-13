@@ -22,9 +22,9 @@ namespace Pathfinding {
 		Navmesh* navmesh = new Navmesh();
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v2 = new Vector3(954.004, 0, 904.308);
-			Vector3* v1 = new Vector3(738.720, 0, 555.027);
-			Vector3* v0 = new Vector3(512.114, 1, 911.350);
+			Vector3* v2 = new Vector3(9.54004, 0, 9.04308);
+			Vector3* v1 = new Vector3(7.38720, 0, 5.55027);
+			Vector3* v0 = new Vector3(5.12114, 1, 9.11350);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
@@ -34,9 +34,9 @@ namespace Pathfinding {
 		}
 		{
 			ConvexPolygon* p2 = new ConvexPolygon();
-		Vector3* v0 = new Vector3(738.720, 0, 555.027);
-		Vector3* v1 = new Vector3(472.280, 0, 190.286);
-		Vector3* v2 = new Vector3(882.390, 1, 192.018);
+		Vector3* v0 = new Vector3(7.38720, 0, 5.55027);
+		Vector3* v1 = new Vector3(4.72280, 0, 1.90286);
+		Vector3* v2 = new Vector3(8.82390, 1, 1.92018);
 		p2->vertices.push_back(v2);
 		p2->vertices.push_back(v1);
 		p2->vertices.push_back(v0);
@@ -44,9 +44,9 @@ namespace Pathfinding {
 	}
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(472.280, 0, 190.286);
-			Vector3* v1 = new Vector3(686.701, 0, -92.551);
-			Vector3* v2 = new Vector3(882.390, 1, 192.018);
+			Vector3* v0 = new Vector3(4.72280, 0, 1.90286);
+			Vector3* v1 = new Vector3(6.86701, 0, -0.92551);
+			Vector3* v2 = new Vector3(8.82390, 1, 1.92018);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
@@ -54,90 +54,9 @@ namespace Pathfinding {
 		}
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(686.701, 0, -92.551);
-			Vector3* v1 = new Vector3(387.140, 0, -427.960);
-			Vector3* v2 = new Vector3(847.352, 1, -381.680);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(387.140, 0, -427.960);
-			Vector3* v1 = new Vector3(260.946, 0, -157.370);
-			Vector3* v2 = new Vector3(0, 0, -479.723);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(-154.424, 0, -165.375);
-			Vector3* v1 = new Vector3(-397.483, 0, -430.620);
-			Vector3* v2 = new Vector3(0, 0, -479.723);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(-397.483, 0, -430.620);
-			Vector3* v1 = new Vector3(-154.424, 0, -165.375);
-			Vector3* v2 = new Vector3(-579.248, 0, -158.669);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(-397.483, 0, -430.620);
-			Vector3* v1 = new Vector3(-579.248, 0, -158.669);
-			Vector3* v2 = new Vector3(-688.497, 0, -752.401);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(-397.483, 0, -430.620);
-			Vector3* v1 = new Vector3(-688.497, 0, -752.401);
-			Vector3* v2 = new Vector3(0, 0, -479.723);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(0, 0, -479.723);
-			Vector3* v1 = new Vector3(-255.569, 0, -740.652);
-			Vector3* v2 = new Vector3(140.036, 0, -720.692);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(140.036, 0, -720.692);
-			Vector3* v1 = new Vector3(-255.569, 0, -740.652);
-			Vector3* v2 = new Vector3(344.311, 0, -1013.399);
-			p->vertices.push_back(v2);
-			p->vertices.push_back(v1);
-			p->vertices.push_back(v0);
-			navmesh->mesh.push_back(p);
-		}
-		{
-			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(344.311, 0, -1013.399);
-			Vector3* v1 = new Vector3(-910.474, 0, -1077.840);
-			Vector3* v2 = new Vector3(640.455, 0, -691.717);
+			Vector3* v0 = new Vector3(6.86701, 0, -0.92551);
+			Vector3* v1 = new Vector3(3.87140, 0, -4.27960);
+			Vector3* v2 = new Vector3(8.47352, 1, -3.81680);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
@@ -146,9 +65,79 @@ namespace Pathfinding {
 
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(640.455, 0, -691.717);
-			Vector3* v1 = new Vector3(140.036, 0, -720.692);
-			Vector3* v2 = new Vector3(344.311, 0, -1013.399);
+			Vector3* v0 = new Vector3(3.87140, 0, -4.27960);
+			Vector3* v1 = new Vector3(2.60946, 0, -1.57370);
+			Vector3* v2 = new Vector3(0, 0, -4.79723);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(-1.54424, 0, -1.65375);
+			Vector3* v1 = new Vector3(-3.97483, 0, -4.30620);
+			Vector3* v2 = new Vector3(0, 0, -4.79723);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(-3.97483, 0, -4.30620);
+			Vector3* v1 = new Vector3(-1.54424, 0, -1.65375);
+			Vector3* v2 = new Vector3(-5.79248, 0, -1.58669);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(-3.97483, 0, -4.30620);
+			Vector3* v1 = new Vector3(-5.79248, 0, -1.58669);
+			Vector3* v2 = new Vector3(-6.88497, 0, -7.52401);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(-3.97483, 0, -4.30620);
+			Vector3* v1 = new Vector3(-6.88497, 0, -7.52401);
+			Vector3* v2 = new Vector3(0, 0, -4.79723);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(0, 0, -4.79723);
+			Vector3* v1 = new Vector3(-2.55569, 0, -7.40652);
+			Vector3* v2 = new Vector3(1.40036, 0, -7.20692);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(1.40036, 0, -7.20692);
+			Vector3* v1 = new Vector3(-2.55569, 0, -7.40652);
+			Vector3* v2 = new Vector3(3.44311, 0, -10.13399);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(3.44311, 0, -10.13399);
+			Vector3* v1 = new Vector3(-9.10474, 0, -10.77840);
+			Vector3* v2 = new Vector3(6.40455, 0, -6.91717);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
@@ -157,9 +146,9 @@ namespace Pathfinding {
 
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(910.474, 0, -1077.840);
-			Vector3* v1 = new Vector3(344.311, 0, -1013.399);
-			Vector3* v2 = new Vector3(578.943, 0, -1660.360);
+			Vector3* v0 = new Vector3(6.40455, 0, -6.91717);
+			Vector3* v1 = new Vector3(1.40036, 0, -7.20692);
+			Vector3* v2 = new Vector3(3.44311, 0, -10.13399);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
@@ -168,9 +157,9 @@ namespace Pathfinding {
 
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(578.943, 0, -1660.360);
-			Vector3* v1 = new Vector3(344.311, 0, -1013.399);
-			Vector3* v2 = new Vector3(-116.295, 0, -1564.534);
+			Vector3* v0 = new Vector3(9.10474, 0, -10.77840);
+			Vector3* v1 = new Vector3(3.44311, 0, -10.13399);
+			Vector3* v2 = new Vector3(5.78943, 0, -16.60360);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
@@ -179,16 +168,27 @@ namespace Pathfinding {
 
 		{
 			ConvexPolygon* p = new ConvexPolygon();
-			Vector3* v0 = new Vector3(344.311, 0, -1013.399);
-			Vector3* v1 = new Vector3(-255.569, 0, -740.652);
-			Vector3* v2 = new Vector3(-116.295, 0, -1564.534);
+			Vector3* v0 = new Vector3(5.78943, 0, -16.60360);
+			Vector3* v1 = new Vector3(3.44311, 0, -10.13399);
+			Vector3* v2 = new Vector3(-1.16295, 0, -15.64534);
+			p->vertices.push_back(v2);
+			p->vertices.push_back(v1);
+			p->vertices.push_back(v0);
+			navmesh->mesh.push_back(p);
+		}
+
+		{
+			ConvexPolygon* p = new ConvexPolygon();
+			Vector3* v0 = new Vector3(3.44311, 0, -10.13399);
+			Vector3* v1 = new Vector3(-2.55569, 0, -7.40652);
+			Vector3* v2 = new Vector3(-1.16295, 0, -15.64534);
 			p->vertices.push_back(v2);
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
 			navmesh->mesh.push_back(p);
 		}
 		
-		{
+	/*	{
 			ConvexPolygon* p = new ConvexPolygon();
 			Vector3* v0 = new Vector3(-688.497, 0, -752.401);
 			Vector3* v1 = new Vector3(-441.331, 0, -1238.179);
@@ -535,6 +535,6 @@ namespace Pathfinding {
 			p->vertices.push_back(v1);
 			p->vertices.push_back(v0);
 			navmesh->mesh.push_back(p);
-		}
+		}*/
 	}
 }

@@ -8,6 +8,7 @@
 #include "PrimeEngine/APIAbstraction/Effect/EffectManager.h"
 #include "../Lua/LuaEnvironment.h"
 #include "PrimeEngine/Render/ShaderActions/SetPerFrameConstantsShaderAction.h"
+
 namespace PE {
 namespace Components {
 

@@ -15,7 +15,7 @@ namespace Pathfinding {
 
         // vertices must be in CLOCKWISE order
         std::vector<Vector3*> vertices;
-
+	
         bool Polygon::operator==(const Polygon &other) const {
             bool result = true;
             for each (Vector3* v in vertices)

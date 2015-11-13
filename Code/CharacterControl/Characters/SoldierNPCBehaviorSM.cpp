@@ -105,14 +105,14 @@ void SoldierNPCBehaviorSM::do_PRE_RENDER_needsRC(PE::Events::Event *pEvt)
 	if (m_havePatrolWayPoint)
 	{
 		char buf[80];
-		sprintf(buf, "Patrol Waypoint: %s",m_curPatrolWayPoint);
+		//sprintf(buf, "Patrol Waypoint: %s",m_curPatrolWayPoint);
 		SoldierNPC *pSol = getFirstParentByTypePtr<SoldierNPC>();
 		PE::Handle hSoldierSceneNode = pSol->getFirstComponentHandle<PE::Components::SceneNode>();
 		Matrix4x4 base = hSoldierSceneNode.getObject<PE::Components::SceneNode>()->m_worldTransform;
 		
-		DebugRenderer::Instance()->createTextMesh(
-			buf, false, false, true, false, 0,
-			base.getPos(), 0.01f, pRealEvent->m_threadOwnershipMask);
+	//	DebugRenderer::Instance()->createTextMesh(
+		//	buf, false, false, true, false, 0,
+			//base.getPos(), 0.01f, pRealEvent->m_threadOwnershipMask);
 		
 		{
 			//we can also construct points ourself
@@ -123,17 +123,18 @@ void SoldierNPCBehaviorSM::do_PRE_RENDER_needsRC(PE::Events::Event *pEvt)
 				WayPoint *pWP = pGameObjectManagerAddon->getWayPoint(m_curPatrolWayPoint);
 				if (pWP)
 				{
-					Vector3 target = pWP->m_base.getPos();
+					
+					Vector3 target =   pWP->m_base.getPos();
 					Vector3 pos = base.getPos();
 					Vector3 color(1.0f, 1.0f, 0);
 					Vector3 linepts[] = {pos, color, target, color};
 					
-					DebugRenderer::Instance()->createLineMesh(true, base,  &linepts[0].m_x, 2, 0);// send event while the array is on the stack
+					//DebugRenderer::Instance()->createLineMesh(true, base,  &linepts[0].m_x, 2, 0);// send event while the array is on the stack
 					sent = true;
 				}
 			}
-			if (!sent) // if for whatever reason we didnt retrieve waypoint info, send the event with transform only
-				DebugRenderer::Instance()->createLineMesh(true, base, NULL, 0, 0);// send event while the array is on the stack
+			//if (!sent) // if for whatever reason we didnt retrieve waypoint info, send the event with transform only
+			//	DebugRenderer::Instance()->createLineMesh(true, base, NULL, 0, 0);// send event while the array is on the stack
 		}
 	}
 }

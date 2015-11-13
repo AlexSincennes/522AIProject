@@ -78,8 +78,9 @@ namespace CharacterControl{
             //    pA6C->getFirstComponent<PE::Components::SceneNode>()->handleEvent(&evt);
             //    m_time_aimdown = -1;
             //}
-
-
+			SceneNode *pSN = getParentsSceneNode();
+			Vector3 curPos = pSN->m_base.getPos();
+			RootSceneNode::Instance()->targetPosition = curPos;
             if (m_state == STANDING)
             {
                 // no one has modified our state based on TARGET_REACHED callback

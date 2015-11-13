@@ -63,11 +63,16 @@ void SoldierNPCMovementSM::addDefaultComponents()
 
 void SoldierNPCMovementSM::do_SoldierNPCMovementSM_Event_MOVE_TO(PE::Events::Event *pEvt)
 {
-	SoldierNPCMovementSM_Event_MOVE_TO *pRealEvt = (SoldierNPCMovementSM_Event_MOVE_TO *)(pEvt);
 	
+	SoldierNPCMovementSM_Event_MOVE_TO *pRealEvt = (SoldierNPCMovementSM_Event_MOVE_TO *)(pEvt);
+	static int count = 1;
 	// change state of this state machine
 	m_state = WALKING_TO_TARGET;
+	
+
 	m_targetPostion = pRealEvt->m_targetPosition;
+
+	
 
 	// make sure the animations are playing
 	
@@ -91,15 +96,44 @@ void SoldierNPCMovementSM::do_SoldierNPCMovementSM_Event_STOP(PE::Events::Event 
 
 void SoldierNPCMovementSM::do_UPDATE(PE::Events::Event *pEvt)
 {
+	Pathfinding::Navmesh* navmesh = new Pathfinding::Navmesh();
+	{
+		Pathfinding::ConvexPolygon* p = new Pathfinding::ConvexPolygon();
+		Vector3* v0 = new Vector3(-9.54004, 0, 10.04308);
+		Vector3* v1 = new Vector3(7.38720, 0, 5.55027);
+		Vector3* v2 = new Vector3(5.12114, 1, 9.11350);
+		Vector3* v3 = new Vector3(5.12114, 1, 9.11350);
+		Vector3* v4 = new Vector3(5.12114, 1, 9.11350);
+
+
+		p->vertices.push_back(v4);
+		p->vertices.push_back(v3);
+		p->vertices.push_back(v2);
+		p->vertices.push_back(v1);
+		p->vertices.push_back(v0);
+		navmesh->mesh.push_back(p);
+
+
+	}
 	if (m_state == WALKING_TO_TARGET)
 	{
 		// see if parent has scene node component
 		SceneNode *pSN = getParentsSceneNode();
+
+		
+			// we use X and Y for the mesh --> transform z to y
+
+			// also I don't know why any Y values are used here
+
+			// basically, I want you to create a mesh which defines the
+			// traversable areas of the map as a convex polygons
+		
+		Vector3 curPos = pSN->m_base.getPos();
 		if (pSN)
 		{
 			
 
-			Vector3 curPos = pSN->m_base.getPos();
+			
 			//Vector3 nextPoint;
 			//Pathfinding::ConvexPolygon* p = new Pathfinding::ConvexPolygon();
 
@@ -124,14 +158,24 @@ void SoldierNPCMovementSM::do_UPDATE(PE::Events::Event *pEvt)
 
 
 			//Call mathod to find the next polygon 
-			Pathfinding::Navmesh *n = new Pathfinding::Navmesh();
-			Pathfinding::ConvexPolygon *next = new Pathfinding::ConvexPolygon();
-			Vector3* p3 = new Vector3(0, 0, 0);
-			next->vertices.push_back(p3);
+		
 			
 			Vector3 goal = RootSceneNode::Instance()->targetPosition;
-			n->FindNextPosition(curPos,goal,next);
+		//	n->FindNextPosition(curPos,goal,next);
+			//Pathfinding::Polygon *next = new Pathfinding::Polygon();
+			//Pathfinding::Navmesh* navmesh = new Pathfinding::Navmesh();
 
+//			Pathfinding::ConvexPolygon *nextpos = navmesh->mesh.at(0);
+			int n = 0 + (rand() % (int)(10 - 0 + 1));
+			/*Pathfinding::ConvexPolygon* p = navmesh->mesh.at(0);
+
+			Vector3* conv = p->vertices.at(0);
+
+			m_targetPostion.m_x = conv->m_x;
+			m_targetPostion.m_y = conv->m_y;
+			m_targetPostion.m_z = conv->m_z;
+			*/
+			
 			float dsqr = (m_targetPostion - curPos).lengthSqr();
 
 			bool reached = true;
@@ -158,10 +202,57 @@ void SoldierNPCMovementSM::do_UPDATE(PE::Events::Event *pEvt)
 
 			if (reached)
 			{
-				m_state = STANDING;
+			
+				m_targetPostion = RootSceneNode::Instance()->targetPosition;
+				if (curPos.m_x != m_targetPostion.m_x  && curPos.m_z != m_targetPostion.m_z)
+				m_state = WALKING_TO_TARGET;
+				//static int count = 1;
+
+
+			/*	Pathfinding::ConvexPolygon* p = navmesh->mesh.at(0);
+
+				Vector3* conv = p->vertices.at(0);
+
+
+				if (count == 1)
+				{
+					Vector3* conv = p->vertices.at(4);
+					
+				}
+				else	if (count == 2)
+				{
+					Vector3* conv = p->vertices.at(3);
+					
+				}
+				else	if (count == 3)
+				{
+					Vector3* conv = p->vertices.at(2);
+					
+				}
+				else	if (count == 4)
+				{
+					Vector3* conv = p->vertices.at(4);
+				
+				}
+				//	 if (count == 5)
+				// {
+				// Vector3* conv = p->vertices.at(5);
+				//count++;
+				//}
+			
+
+				m_targetPostion.m_x = conv->m_x;
+				m_targetPostion.m_y = conv->m_y;
+				m_targetPostion.m_z = conv->m_z;
+				count++;
+				if (count==5)
+				
+				*/
 				
 				// target has been reached. need to notify all same level state machines (components of parent)
+				else
 				{
+					m_state = STANDING;
 					PE::Handle h("SoldierNPCMovementSM_Event_TARGET_REACHED", sizeof(SoldierNPCMovementSM_Event_TARGET_REACHED));
 					Events::SoldierNPCMovementSM_Event_TARGET_REACHED *pOutEvt = new(h) SoldierNPCMovementSM_Event_TARGET_REACHED();
 

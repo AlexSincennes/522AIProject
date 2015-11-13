@@ -322,7 +322,7 @@ void DefaultAnimationSM::do_CALCULATE_TRANSFORMATIONS(Events::Event *pEvt)
 		if (flag)
 		{
 			tarPos = m_modelSpacePalette[m_modelSpacePalette.m_size - 4].getPos();
-			RootSceneNode::Instance()->targetPosition = tarPos;
+		//	RootSceneNode::Instance()->targetPosition = tarPos;
 			
 		}
 

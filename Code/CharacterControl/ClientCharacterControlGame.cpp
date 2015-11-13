@@ -69,6 +69,7 @@ int ClientCharacterControlGame::initGame()
 
 	//Create PolyMesh 
 	{
+		
 		Pathfinding::Polygon* p = new Pathfinding::Polygon();
 		p->CreatePolygonMesh();
 	}

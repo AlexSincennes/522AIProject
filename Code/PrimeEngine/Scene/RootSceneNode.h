@@ -13,7 +13,7 @@
 #include "../Events/Component.h"
 #include "../Utils/Array/Array.h"
 #include "PrimeEngine/APIAbstraction/Effect/Effect.h"
-
+#include "PrimeEngine/Pathfinding/Navmesh.h"
 
 // Sibling/Children includes
 #include "SceneNode.h"
@@ -54,6 +54,7 @@ struct RootSceneNode : public SceneNode
 	static void SetGameAsCurrent() { s_hCurInstance = s_hInstance; }
 	static bool TitleIsCurrent() { return s_hCurInstance == s_hTitleInstance;}
 	Vector3 targetPosition;
+	Pathfinding::Navmesh* navmesh = new Pathfinding::Navmesh();
 	static void SetInstance(Handle h){s_hInstance = h;}
 	private:
 		static Handle s_hInstance;
